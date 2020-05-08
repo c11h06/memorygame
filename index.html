@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Match the cards!</title>
+
+        <link rel="stylesheet" href="style.css"></link>
+    </head>
+    <body>
+        <section class="concentration">
+            <div class="card" data-framework="luigidance">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media1.giphy.com/media/3S6HzZEoZeeJ2/source.gif"/>
+            </div>
+            
+            <div class="card" data-framework="luigidance">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media1.giphy.com/media/3S6HzZEoZeeJ2/source.gif"/>
+            </div>
+            
+            <div class="card" data-framework="crash">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media.giphy.com/media/25Lu0ynhIQAsh0IFlt/giphy.gif"/>
+            </div>
+            
+            <div class="card" data-framework="crash">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media.giphy.com/media/25Lu0ynhIQAsh0IFlt/giphy.gif"/>
+            </div>
+            
+            <div class="card" data-framework="peach">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media.giphy.com/media/g57SpI4pMBU5O/giphy.gif"/>
+            </div>
+            
+            <div class="card" data-framework="peach">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media.giphy.com/media/g57SpI4pMBU5O/giphy.gif"/>
+            </div>
+            
+            <div class="card" data-framework="bowser">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.pinimg.com/originals/e6/cd/c6/e6cdc6a75d5e008342920d311f829d6d.gif"/>
+            </div>
+            
+            <div class="card" data-framework="bowser">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.pinimg.com/originals/e6/cd/c6/e6cdc6a75d5e008342920d311f829d6d.gif"/>
+            </div>
+            
+            <div class="card" data-framework="toad">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://66.media.tumblr.com/cd5409ee744e708518f32578c353d10c/tumblr_myvymhpYkU1t0ple2o1_250.gif"/>
+            </div>
+            
+            <div class="card" data-framework="toad">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://66.media.tumblr.com/cd5409ee744e708518f32578c353d10c/tumblr_myvymhpYkU1t0ple2o1_250.gif"/>
+            </div>
+            
+            <div class="card" data-framework="succ">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.kym-cdn.com/photos/images/newsfeed/001/444/767/61e.gif"/>
+            </div>
+
+            <div class="card" data-framework="succ">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.kym-cdn.com/photos/images/newsfeed/001/444/767/61e.gif"/>
+            </div>
+
+            <div class="card" data-framework="kong">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media1.tenor.com/images/1d3c78b73417b807231324944ff2078f/tenor.gif?itemid=11304653"/>
+            </div>
+
+            <div class="card" data-framework="kong">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://media1.tenor.com/images/1d3c78b73417b807231324944ff2078f/tenor.gif?itemid=11304653"/>
+            </div>
+
+            <div class="card" data-framework="boo">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.pinimg.com/originals/0c/3a/14/0c3a146cf1cb9d6bcb8cd1df8b657b7a.gif"/>
+            </div>
+                <div class="card" data-framework="boo">
+                <img class="facedown" src="https://tinyurl.com/y7jldqll"/>
+                <img class="faceup" src="https://i.pinimg.com/originals/0c/3a/14/0c3a146cf1cb9d6bcb8cd1df8b657b7a.gif"/>
+            </div>
+        </section>
+    </body>
+    <script>
+        let cards = document.querySelectorAll(".card");
+
+        let flipped = false;
+        let lockBoard = false;
+        /* var keeping track of whether user clicks > 2 cards before setTimeout runs */
+        let card1, card2;
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === card1) return;
+
+            this.classList.add("flip");
+
+            if (!flipped) {
+            /* if a card hasn't yet been clicked */
+                flipped = true;
+                card1 = this;
+                /* this refers to the particular card that triggered event listener */
+                return;
+            }   
+
+            card2 = this;
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            card1.dataset.framework === card2.dataset.framework ? disableCards() : unflipCards();
+        }
+
+        function disableCards() {
+            /* do card's dataset values match? if so, remove event listener so that 
+                both cards become unclickable */
+            card1.removeEventListener("click", flipCard);
+            card2.removeEventListener("click", flipCard);
+
+            resetBoard();
+        };
+
+        function unflipCards() {
+        /* if dataset values aren't a match, undo the flip after 2 seconds (due to setTimeout) */
+            lockBoard = true;
+            setTimeout(() => {
+                card1.classList.remove("flip");
+                card2.classList.remove("flip");
+
+                resetBoard();
+            }, 1500);
+        }
+
+        function resetBoard() {
+           [flipped, lockBoard] = [false, false];
+           [card1, card2] = [null, null];
+        };
+
+
+        (function shuffle() {
+            cards.forEach(card => {
+                let randomPosition = Math.floor(Math.random() * 15);
+                card.style.order = randomPosition;
+                /* cards ordered first by integer value of .order property (which defaults to 0, meaning
+                cards otherwise are ordered by source). randomPosition chooses a random number between 
+                0 and 15 and reassigns each number as the value of a random card's order property */
+            });
+        })();
+        /* wrapping in parentheses & adding invoking parentheses ensures function 
+        is run immediately after it's defined */
+
+        cards.forEach(card => card.addEventListener("click", flipCard))
+    </script>
+</html>

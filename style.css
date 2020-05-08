@@ -1,0 +1,68 @@
+* {
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box;
+    /* > border-box < incorporates padding and border into element's 
+    dimensions, as opposed to default >content-box<, which adds to dims
+    */
+}
+
+body {
+    height: 100vh;
+    display: flex;
+}
+
+.concentration {
+    border: 10px solid gainsboro;
+    background-color: peru;
+    width: 700px;
+    height: 700px;
+    margin: auto;
+    /* ^margin: auto, along with body's "display: flex", center the 
+    game board vertically and horizontally */
+    display: flex;
+    flex-wrap: wrap;
+    perspective: 1000px;
+    /* creates a 3d space on which either side of the card appears*/
+}
+
+.card {
+    width: calc(25% - 10px);
+    height: calc(25% - 10px);
+    margin: 3px;
+    /* adding the margin makes cards overflow their available space,
+    which is why we use the calc method to subtract both margins
+    (5px times 2 = 10px) from the 25% */
+    position: relative;
+    border: 3px solid;
+    transform: scale(1);
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    /* sets duration of 3d effect upon each card flip */
+}
+
+.card:active {
+    transform: scale(.95);
+    /* card will transform and shrink a bit when clicked */
+    transition: transform .2s;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.facedown, .faceup {
+    width: 100%; 
+    height: 100%;
+    padding: 15px;
+    position: absolute;
+    border-radius: 5px;
+    background-color: gainsboro;
+    backface-visibility: hidden;
+    /* every element has a backface (inverted picture of itself)
+    we're hiding this */
+}
+
+.faceup {
+    transform: rotateY(180deg);
+}
